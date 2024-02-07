@@ -1,0 +1,10 @@
+JobID             State    Elapsed        NodeList  AllocCPUS 
+------------ ---------- ---------- --------------- ---------- 
+349535        COMPLETED   00:00:14            c120         32 
+349535.batch  COMPLETED   00:00:14            c120         32 
+349535.exte+  COMPLETED   00:00:14            c120         32 
+349535.0      COMPLETED   00:00:02            c120          8 
+349535.1      COMPLETED   00:00:06            c120          8 
+349535.2      COMPLETED   00:00:14            c120          8 
+349535.3      COMPLETED   00:00:04            c120          8 
+349535.4      COMPLETED   00:00:12            c120          8 
