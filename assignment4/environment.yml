@@ -1,0 +1,14 @@
+name: envTeam3
+channels:
+  - conda-forge
+  - anaconda 
+  - default
+dependencies:
+  - python=3.10
+  - numpy
+  - scipy
+  - numexpr
+  - pip  
+  - tensorflow=2.15
+  - pip:
+    - gmsh

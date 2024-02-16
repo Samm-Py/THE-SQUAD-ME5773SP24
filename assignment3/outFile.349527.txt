@@ -1,0 +1,9 @@
+Starting job - Wed Feb 7 17:32:47 CST 2024
+waiting for all executions to complete
+Terminated a task that takes 4 seconds.
+Terminated a task that takes 6 seconds.
+Terminated a task that takes 2 seconds.
+Terminated a task that takes 12 seconds.
+Terminated a task that takes 14 seconds.
+Calculation ended
+Total CPU time 14
