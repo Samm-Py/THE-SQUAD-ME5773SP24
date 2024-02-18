@@ -6,7 +6,7 @@ import time as time
 
 start_time = time.time()
 
-N = 5
+N = 10000
 print("N =",N)
 
 K = np.zeros((N, N)) # Define matrix K
