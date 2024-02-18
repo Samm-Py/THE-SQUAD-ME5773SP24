@@ -1,0 +1,48 @@
+Time to compute integral: 354.769222
+
+
+The value of the integral is: 3.1415926535810987
+
+
+Time to compute integral using vectorized values: 15.377504
+
+
+Time to compute integral using numexpr values: 13.886702
+
+
+Time to compute integral: 361.954770
+
+
+The value of the integral is: 3.1415926535810987
+
+
+Time to compute integral using vectorized values: 15.361353
+
+
+Time to compute integral using numexpr values: 10.121975
+
+
+Time to compute integral: 358.021756
+
+
+The value of the integral is: 3.1415926535810987
+
+
+Time to compute integral using vectorized values: 15.356095
+
+
+Time to compute integral using numexpr values: 8.158909
+
+
+Time to compute integral: 351.722487
+
+
+The value of the integral is: 3.1415926535810987
+
+
+Time to compute integral using vectorized values: 15.417412
+
+
+Time to compute integral using numexpr values: 7.134628
+
+
