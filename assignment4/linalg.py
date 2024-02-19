@@ -4,13 +4,13 @@
 import numpy as np
 import time as time
 
-start_time = time.time()
 
 N = 10000
 print("N =",N)
 
-K = np.zeros((N, N)) # Define matrix K
 
+start_time = time.time()
+K = np.zeros((N, N)) # Define matrix K
 for i in range(N):
     for j in range(N):
         if j == i:
@@ -35,13 +35,17 @@ elapsed_time = time.time() - start_time # Calculate elapsed time of K and f
 
 print("K and f elapsed time =","{:.9f}".format(elapsed_time))
 
-start_time = time.time()
+start_time_u = time.time()
 
 u = np.linalg.solve(K, f_stacked)
 
-elapsed_time = time.time() - start_time # Calculate elapsed time of uN
+elapsed_time = time.time() - start_time_u # Calculate elapsed time of uN
 
 print("uN elapsed time =","{:.9f}".format(elapsed_time))
 
 print("uN = ", u[-1])
+
+elapsed_time = time.time() - start_time # Calculate total elapsed time
+
+print("Total elapsed time =","{:.9f}".format(elapsed_time))
 

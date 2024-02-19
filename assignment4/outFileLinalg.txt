@@ -1,4 +1,4 @@
-Sun Feb 18 14:45:04 CST 2024
+Sun Feb 18 17:34:50 CST 2024
 Starting job - date
 ----------------------
 Execution with MKL_NUM_THREADS=1
@@ -17,9 +17,10 @@ f = [[0.    ]
  [0.    ]
  [0.    ]
  [0.0001]]
-K and f elapsed time = 17.628005028
-uN elapsed time = 4.869437933
+K and f elapsed time = 16.742288351
+uN elapsed time = 4.668639421
 uN =  [1.]
+Total elapsed time = 21.411600590
 Running Python file
 ----------------------
 Execution with MKL_NUM_THREADS=2
@@ -38,9 +39,10 @@ f = [[0.    ]
  [0.    ]
  [0.    ]
  [0.0001]]
-K and f elapsed time = 16.813220501
-uN elapsed time = 4.304053307
+K and f elapsed time = 16.730973721
+uN elapsed time = 4.406372309
 uN =  [1.]
+Total elapsed time = 21.137976646
 Running Python file
 ----------------------
 Execution with MKL_NUM_THREADS=4
@@ -59,9 +61,10 @@ f = [[0.    ]
  [0.    ]
  [0.    ]
  [0.0001]]
-K and f elapsed time = 17.079717398
-uN elapsed time = 4.409614801
+K and f elapsed time = 16.806123018
+uN elapsed time = 4.449236631
 uN =  [1.]
+Total elapsed time = 21.255957603
 Running Python file
 ----------------------
 Execution with MKL_NUM_THREADS=8
@@ -80,9 +83,10 @@ f = [[0.    ]
  [0.    ]
  [0.    ]
  [0.0001]]
-K and f elapsed time = 16.554191113
-uN elapsed time = 4.202594519
+K and f elapsed time = 16.812627077
+uN elapsed time = 4.726174831
 uN =  [1.]
+Total elapsed time = 21.539846897
 Running Python file
 ----------------------
 Execution with MKL_NUM_THREADS=16
@@ -101,9 +105,10 @@ f = [[0.    ]
  [0.    ]
  [0.    ]
  [0.0001]]
-K and f elapsed time = 17.393655300
-uN elapsed time = 4.511366367
+K and f elapsed time = 16.260818958
+uN elapsed time = 4.219045639
 uN =  [1.]
+Total elapsed time = 20.480470896
 Running Python file
 ----------------------
 Execution with MKL_NUM_THREADS=20
@@ -122,9 +127,10 @@ f = [[0.    ]
  [0.    ]
  [0.    ]
  [0.0001]]
-K and f elapsed time = 17.825030804
-uN elapsed time = 4.289745092
+K and f elapsed time = 15.999682426
+uN elapsed time = 5.880579710
 uN =  [1.]
+Total elapsed time = 21.880818605
 Running Python file
 ----------------------
 Execution with MKL_NUM_THREADS=40
@@ -143,11 +149,12 @@ f = [[0.    ]
  [0.    ]
  [0.    ]
  [0.0001]]
-K and f elapsed time = 16.722251177
-uN elapsed time = 4.190599203
+K and f elapsed time = 16.218121052
+uN elapsed time = 4.255821466
 uN =  [1.]
+Total elapsed time = 20.474547863
 Running Python file
 Execution complete
 -----------------
 Calculations ended
-Total CPU time 154177 [ms]
+Total CPU time 151691 [ms]
