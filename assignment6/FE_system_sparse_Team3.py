@@ -32,7 +32,7 @@ def define_global_variables():
   
   Ndof = 500000
   Ne   = Ndof-1 # number of elements.
-  num_workers = 1
+  num_workers = 4
 
   
   # List of elemental stiffness values.
@@ -41,8 +41,6 @@ def define_global_variables():
   # may have a different stiffness value.
   chunks = []
   k_list  = [1]*Ne
-  Kg = sps.lil_matrix((Ndof,Ndof))
-  fg = np.zeros((Ndof,))
   
   
   
@@ -68,8 +66,8 @@ def assemble(e):
         Nothing, global inputs are modified.
 
     """
-    Kg_temp = sps.lil_matrix((Ndof,Ndof))
-    
+    Kg = sps.lil_matrix((Ndof,Ndof), dtype = 'int8')
+    fg = np.array((Ndof,))
 
     for e in e:
         Ke = k_list[e] * np.array([[ 1,-1],
@@ -81,12 +79,12 @@ def assemble(e):
         for i in range(2):
             for j in range(2):
 
-                Kg_temp[e+i,e+j] = Kg_temp[e+i,e+j] + Ke[i,j]
+                Kg[e+i,e+j] = Kg[e+i,e+j] + Ke[i,j]
             # end for 
         # end for
     
-    Kg_temp = Kg_temp.tocsr()
-    return Kg_temp, fg
+    Kg = Kg.tocsr()
+    return Kg, fg
 # end function
 
 

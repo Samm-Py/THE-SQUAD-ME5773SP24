@@ -29,10 +29,10 @@ def define_global_variables():
   global chunks
   global num_workers
   
-  Ndof = 5000
+  Ndof = 50000
+  print("Degrees of freedom {}".format(Ndof))
   Ne   = Ndof-1 # number of elements.
-  num_workers = 1
-  print('Number of Degrees of freedom: {0}'.format(Ndof))
+  num_workers = 4
   
   # List of elemental stiffness values.
   #
@@ -40,7 +40,7 @@ def define_global_variables():
   # may have a different stiffness value.
   chunks = []
   k_list  = [1]*Ne
-  Kg = np.zeros((Ndof,Ndof))
+  Kg = np.zeros((Ndof,Ndof),dtype = 'int8')
   fg = np.zeros((Ndof,))
 def assemble(e):
     """
@@ -108,7 +108,6 @@ def elasticFEProblem( Ndof, Ne1, Ne2, k_list ):
 
     Ne = len(k_list) # Number of elements.
     Nu = Ne+1        # Number of nodes.
-    define_global_variables()
     elements = np.arange(Ne1, Ne2, 1)
 
     chunk_size = int(len(elements)/num_workers)
