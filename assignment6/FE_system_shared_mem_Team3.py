@@ -16,8 +16,7 @@ import scipy as sp # Install scipy using "conda install scipy"
 import time
 import sys
 import multiprocessing as mproc
-import scipy.sparse as sps
-
+from multiprocessing import shared_memory, Process, Lock, Pool
 # =====================================================================================
 
 
@@ -30,10 +29,10 @@ def define_global_variables():
   global chunks
   global num_workers
   
-  Ndof = 500000
+  Ndof = 100000
   Ne   = Ndof-1 # number of elements.
-  num_workers = 2
-
+  num_workers = 1
+  print('Number of Degrees of freedom: {0}'.format(Ndof))
   
   # List of elemental stiffness values.
   #
@@ -41,54 +40,68 @@ def define_global_variables():
   # may have a different stiffness value.
   chunks = []
   k_list  = [1]*Ne
+  Kg = np.zeros((Ndof,Ndof), dtype = 'int8')
+  fg = np.zeros((Ndof,))
   
-  
-  
-def assemble(e):
-    """
-    DESCRIPTION: Assemble an element's system matrix and rhs into a global 
-                 system of equations for 1D Finite Element problem.
-                 
-                 This assembly function only supports linear elastic problems
-                 of springs assembled in the form:
-                
-            x-^^-x-^^-x-^^-x...x-^^-x-^^-x-^^-x
-
-    
-    INPUTS:
-        -e: (integer) Element index.
-        -Ke: (Float array, Shape: (2,2) ) Elemental stiffness matrix.
-        -fe: (Float array, Shape: (2,) )  Elemental force vector.
-        -Kg: (Float array, Shape: (Ndof,Ndof) ) Global stiffness matrix.
-        -fg: (Float array, Shape: (Ndof,) )     Global force vector.
-    
-    OUTPUTS:
-        Nothing, global inputs are modified.
-
-    """
-    Kg = sps.lil_matrix((Ndof,Ndof), dtype = 'int8')
-    fg = np.array((Ndof,))
-
-    for e in e:
-        Ke = k_list[e] * np.array([[ 1,-1],
-                                   [-1, 1]])
-    
-        fe = np.array([0.0,
-                       0.0])
-
-        for i in range(2):
-            for j in range(2):
-
-                Kg[e+i,e+j] = Kg[e+i,e+j] + Ke[i,j]
-            # end for 
-        # end for
-    
-    Kg = Kg.tocsr()
-    return Kg, fg
-# end function
 
 
 
+
+
+def assemble(args):
+      """
+      DESCRIPTION: Assemble an element's system matrix and rhs into a global 
+                   system of equations for 1D Finite Element problem.
+                   
+                   This assembly function only supports linear elastic problems
+                   of springs assembled in the form:
+                  
+              x-^^-x-^^-x-^^-x...x-^^-x-^^-x-^^-x
+
+      
+      INPUTS:
+          -e: (integer) Element index.
+          -Ke: (Float array, Shape: (2,2) ) Elemental stiffness matrix.
+          -fe: (Float array, Shape: (2,) )  Elemental force vector.
+          -Kg: (Float array, Shape: (Ndof,Ndof) ) Global stiffness matrix.
+          -fg: (Float array, Shape: (Ndof,) )     Global force vector.
+      
+      OUTPUTS:
+          Nothing, global inputs are modified.
+
+      """
+      shr_name = args[0] 
+      elements = args[1]
+
+      
+      Ke = np.array([[ 1,-1],
+                             [-1, 1]])
+     # Ke = k_list[e] * np.array([[ 1,-1],
+                             #[-1, 1]])
+      fe = np.array([0.0,
+                 0.0])
+      existing_shm = shared_memory.SharedMemory(name=shr_name)
+      np_array = np.frombuffer(existing_shm.buf, dtype=np.int8).reshape(Ndof,Ndof,)
+
+      for e in range(0,len(elements)-1):
+          for j in range(2):
+              for k in range(2):
+                  np_array[elements[e]+j,elements[e]+k] = np_array[elements[e]+j,elements[e]+k] + Ke[j,k]
+
+      del np_array
+      existing_shm.close()
+
+
+
+def create_shared_block():
+
+    a = np.zeros(shape=(Ndof, Ndof), dtype=np.int8)  # Start with an existing NumPy array
+
+    shm = shared_memory.SharedMemory(create=True, size=a.nbytes)
+    # # Now create a NumPy array backed by shared memory
+    np_array = np.ndarray(a.shape, dtype=np.int8, buffer=shm.buf)
+    np_array[:] = a[:]  # Copy the original data into shared memory
+    return shm, np_array
 
 
 def elasticFEProblem( Ndof, Ne1, Ne2, k_list ):
@@ -114,14 +127,16 @@ def elasticFEProblem( Ndof, Ne1, Ne2, k_list ):
 
     Ne = len(k_list) # Number of elements.
     Nu = Ne+1        # Number of nodes.
-    define_global_variables()
     elements = np.arange(Ne1, Ne2, 1)
 
+    print("creating shared block")
+    shr, np_array = create_shared_block()
     chunk_size = int(len(elements)/num_workers)
-    chunks = [elements[i*chunk_size:(i+1)*chunk_size] for i in range(0,num_workers-1)]
-    left_over = elements[(num_workers-1)*chunk_size:]
+    chunks = [[shr.name,elements[i*chunk_size:(i+1)*chunk_size]] for i in range(0,num_workers)]
+    left_over = elements[num_workers*chunk_size:]
     if len(left_over)!= 0:
-        chunks.append(left_over)
+        chunks.append([shr.name,left_over])
+
     if len(sys.argv)>1:
 
         NProc = int(sys.argv[1])
@@ -131,23 +146,18 @@ def elasticFEProblem( Ndof, Ne1, Ne2, k_list ):
 
         NProc = num_workers # Define number of processes.
         print(' Using default configuration. NProc = {}'.format(NProc) )
+    st = time.time()
+    with Pool(num_workers) as p:
 
-    # end if 
-
-    
-    p = mproc.Pool( processes = NProc ) # Number of processes created
-    pool_res= p.map(assemble, chunks)
-    Kg = sum([pool_res[i][0] for i in range(0,len(pool_res))])
-    fg = sum([pool_res[i][1] for i in range(0,len(pool_res))])
-    # fg = sum(pool_res[1])
-    # for e in range( Ne1, Ne2):
         
-    #     # Assemble the elemental values into the global components.
-    #     assemble(e,Kg,fg)
-        
-    # # end for
-
-    return Kg, pool_res
+        p.map(assemble, chunks)
+        p.close()
+        p.join()
+   
+    Kg = np_array.copy()
+    shr.close()
+    shr.unlink()
+    return Kg, fg
 
 # end function
 
