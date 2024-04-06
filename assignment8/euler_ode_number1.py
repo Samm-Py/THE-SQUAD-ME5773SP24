@@ -1,9 +1,9 @@
 import numpy as np
 import math
 import time
+from numba import jit
 
-
-
+@jit(nopython = True)
 def int_funct( y, t):
     """
     Function to be integrated. 
@@ -81,10 +81,18 @@ if __name__ == '__main__':
     y0 = -1       # Initial value.
     t0 = 0.0      # Initial time.
     dt = 10e-8 # Euler's method requires VERY small time increments.
-    tmax = 10e-6     # Maximum integration time.
+    tmax = 4*dt    # Maximum integration time.
     
     
+    #dummy run
+    y, t = euler_integration(y0, t0, dt, tmax)
     # Measure performance in this call.
+    
+    # Define your 
+    y0 = -1       # Initial value.
+    t0 = 0.0      # Initial time.
+    dt = 10e-8 # Euler's method requires VERY small time increments.
+    tmax = 10e-6    # Maximum integration time.
     t_start = time.time()
 
     y, t = euler_integration(y0, t0, dt, tmax)
