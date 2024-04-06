@@ -50,13 +50,14 @@ def gauleg(x1, x2, x, w, n):
 
 # Example usage:
 
-
+if size > 21:
+    print(size)
+    raise Exception("Number of processes exceeds the number of quadrature points!")
 
 
 # --- Master ---
 if rank == 0:
-    data = {"Integration Result": [0 for i in range(1,21)], "Percent Error": [0 for i in range(1,21)], "Run Time": [0 for i in range(1,21)]}
-    index = ["Quadrature Number " + str(i) for i in range(1,21)]
+
     # Set parameters (integrate from a to b using n trapezoids)
     n = 20
     x = [0.0] * n
@@ -67,10 +68,24 @@ if rank == 0:
     
     partial = 0.  # partial integral result returned by a Worker
     integral = 0.  # running total of the integral
-
+    num_partitions = size - 1
+    size_partition = math.floor(20/num_partitions)
+    remainder = 20 - (num_partitions*size_partition)
+    x_list = [x[i*size_partition:(i+1)*size_partition] for i in range(0,num_partitions,1)]
+    stragglers_x = x[(20 - remainder):]
+    if len(stragglers_x)!=0:
+        for i in stragglers_x:
+           x_list[-1].append(i)
+    w_list =[w[i*size_partition:(i+1)*size_partition] for i in range(0,num_partitions,1)]
+    stragglers_w = w[(20 - remainder):]
+    if len(stragglers_w)!=0:
+        for i in stragglers_w:
+           w_list[-1].append(i)
     # Loop over all tasks waiting for result
-    for i in range(1, size):
-        comm.send([x[i-1],w[i-1]], dest=i)
+    data = {"Integration Result": [0 for i in range(1,len(x_list)+1)], "Percent Error": [0 for i in range(1,len(x_list)+1)], "Run Time": [0 for i in range(1,len(x_list)+1)]}
+    index = ["Quadrature Number " + str(i) for i in range(1,len(x_list)+1)]
+    for i in range(1,len(x_list)+1):
+        comm.send([x_list[i-1],w_list[i-1]], dest=i)
         res = comm.recv(source=i)  # receive result from Worker i
         partial = res[0]
         time_worker = res[1]
@@ -97,7 +112,9 @@ else:
     w = vals[1]
     
     print(f"Process {rank} starts")
-    partial  = w*f(x)
+    partial = 0
+    for i in range(0,len(x)):
+        partial  = partial + w[i]*f(x[i])
     et = time.time()
     tt = et - st
     

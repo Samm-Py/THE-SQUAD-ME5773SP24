@@ -1,0 +1,8 @@
+                     Integration Result  Percent Error  Run Time
+Quadrature Number 1           -0.021406   1.029094e+00  0.031161
+Quadrature Number 2           -0.074562   1.101340e+00  0.006077
+Quadrature Number 3           -0.150426   1.204450e+00  0.035049
+Quadrature Number 4           -0.227334   1.308978e+00  0.026184
+Quadrature Number 5           -0.265220   1.360471e+00  0.028849
+Quadrature Number 6           -0.209928   1.285322e+00  0.016778
+Quadrature Number 7            0.735759  -6.035798e-16  0.022284

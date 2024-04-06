@@ -1,0 +1,21 @@
+                      Integration Result  Percent Error  Run Time
+Quadrature Number 1            -0.006480   1.008807e+00  0.017426
+Quadrature Number 2            -0.021406   1.029094e+00  0.170810
+Quadrature Number 3            -0.044368   1.060302e+00  0.133367
+Quadrature Number 4            -0.074562   1.101340e+00  0.129551
+Quadrature Number 5            -0.110629   1.150360e+00  0.121026
+Quadrature Number 6            -0.150426   1.204450e+00  0.227629
+Quadrature Number 7            -0.190790   1.259310e+00  0.267645
+Quadrature Number 8            -0.227334   1.308978e+00  0.243369
+Quadrature Number 9            -0.254391   1.345754e+00  0.711132
+Quadrature Number 10           -0.265220   1.360471e+00  0.672833
+Quadrature Number 11           -0.252600   1.343319e+00  0.654064
+Quadrature Number 12           -0.209928   1.285322e+00  0.114677
+Quadrature Number 13           -0.132765   1.180446e+00  0.230753
+Quadrature Number 14           -0.020635   1.028046e+00  0.217445
+Quadrature Number 15            0.121377   8.350309e-01  0.334037
+Quadrature Number 16            0.281836   6.169454e-01  0.239387
+Quadrature Number 17            0.443558   3.971419e-01  0.255364
+Quadrature Number 18            0.585909   2.036676e-01  0.443012
+Quadrature Number 19            0.688534   6.418572e-02  0.397375
+Quadrature Number 20            0.735759  -6.035798e-16  0.416221
