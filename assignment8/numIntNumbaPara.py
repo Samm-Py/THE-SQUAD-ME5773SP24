@@ -64,7 +64,7 @@ if __name__ == '__main__':
     N = 1_000 # 10**8 
     F = integral_riemann(a,b,N)
 
-    num_threads = [1,2,4,8,12]
+    num_threads = [1,2,4,8,16,20]
     for i in num_threads:
         print('Number of Threads: {}'.format(i))
         print('\n')

@@ -1,0 +1,29 @@
+Problem 1,,,,,,,,,,,
+,Pure Python Time [s],Euler ODE Error,Euler Numba 1 Time[s],Euler Numba 1 error,Euler Numba 2 Time [s],Euler Numba 2 Error ,,,,,
+,0.0001866817474,5.00E-13,0.00008845329285,5.00E-13,0.000008344650269,5.00E-13,,,,,
+,,,,,,,,,,,
+Problem 1 profile results,,,,,,,,,,,
+,ncalls,tottime,percall,cumtime,percall,file name:,,,,,
+,1,0.001,0.001,0.002,0.002,euler_ode_profile.py:25 (euler_integration),,,,,
+,1000,0.001,0,0.001,0,euler_ode_profile.py:7(int_funct),,,,,
+,1,0,0,0,0,method 'diasable' of '_lsprof.Profiler' objects,,,,,
+,2,0,0,0,0,built-in method numpy.zeros,,,,,
+,,,,,,,,,,,
+Problem 2,,,,,,,,,,,
+,NumInt,,NumIntNumba,,,,NumIntNumbaPara,,,,
+,Time [s],Integral,Time [s],Integral,Speed up,Efficiency [%],Time [s],Integral,# of threads,Speed up,Efficiency [%]
+,82.417743,1.804776,1.7039,1.804776,48.37005869,48.37005869,1.777605,1.804776,1,46.36448649,46.36448649
+,,,,,,,1.104747,1.804776,2,74.60327387,37.30163694
+,,,,,,,0.80059,1.804776,4,102.9462559,25.73656397
+,,,,,,,0.474425,1.804776,8,173.7213321,21.71516652
+,,,,,,,0.302173,1.804776,16,272.7501895,17.04688684
+,,,,,,,0.266056,1.804776,20,309.7759231,15.48879616
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+Bonus (avg of 100 iterations of matrix mult),,,,,,,,,,,
+,Numpy Time [s],Cython Time [s],Speed up,,,,,,,,
+3X3,1.31E-06,1.12E-06,1.17,,,,,,,,
+10X10,2.01E-06,1.50E-06,1.34,,,,,,,,
+100X100,5.79E-05,1.03E-05,5.64,,,,,,,,
+1000X1000,0.0303,0.0014,21.64,,,,,,,,
