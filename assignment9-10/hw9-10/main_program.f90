@@ -58,23 +58,23 @@ PROGRAM main_program
   print*, "CPU TIME: ", t_end - t_start
 
 
-  ! ! Uncomment lines 56-71 to the behavior with unsorted arrays.
+  ! Uncomment lines 56-71 to the behavior with unsorted arrays.
 
-  ! print*, " -------------------------- "
-  ! print*, "Testing on an unsorted array"
+  print*, " -------------------------- "
+  print*, "Testing on an unsorted array"
 
   
-  ! ! Call the fillUnsortedArray subroutine to fill arr2 with unsorted values.
+  ! Call the fillUnsortedArray subroutine to fill arr2 with unsorted values.
 
-
-  ! x = arr2(N2/2-1) ! Value of interest: midle element -1.
-  ! n = SIZE(arr2,1)
-
-  ! idx = linearsearch(arr2,n,x)
-
-  ! print*, "Index computed with linear search: ", idx
-  ! print*, "was the value found?: ", arr2(idx)==x
-
+  CALL fillUnSortedArray(arr2)
+  x = arr2(N2/2-1) ! Value of interest: midle element -1.
+  n = SIZE(arr2,1)
+  CALL CPU_TIME(t_start)
+  idx = linearsearch(arr2,n,x)
+  CALL CPU_TIME(t_end)
+  print*, "Index computed with linear search: ", idx
+  print*, "was the value found?: ", arr2(idx)==x
+  print*, "CPU TIME: ", t_end - t_start
 CONTAINS
   
   ! Fill an array with sorted values.
