@@ -81,7 +81,7 @@ if __name__ == '__main__':
     y0 = -1       # Initial value.
     t0 = 0.0      # Initial time.
     dt = 10e-8 # Euler's method requires VERY small time increments.
-    tmax = 10e-6     # Maximum integration time.
+    tmax = 10     # Maximum integration time.
     
     
     # Measure performance in this call.
