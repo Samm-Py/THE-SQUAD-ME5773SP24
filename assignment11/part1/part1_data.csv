@@ -1,0 +1,4 @@
+CPU time fortran linear search:,0.0189511775970459 (s)
+CPU time fortran binary search:,5.9604644775390625e-06 (s)
+CPU time np.searchsorted():,0.0000367164611816406(s)
+CPU time np.where(),0.012002229690551758(s)
